@@ -1,0 +1,2 @@
+- Faster and more efficient when there are many conditions.
+- Cleaner code for simple value comparisons.

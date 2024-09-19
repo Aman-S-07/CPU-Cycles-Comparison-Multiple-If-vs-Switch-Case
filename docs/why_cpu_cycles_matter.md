@@ -1,0 +1,4 @@
+- CPU cycles determine how quickly your code runs. 
+- If your code uses fewer CPU cycles, it runs faster. 
+- Complex decisions like if-else or switch-case impact how many cycles are used. 
+- So, understanding which method to use can make your programs faster and more efficient.

@@ -1,0 +1,2 @@
+- The CPU skips checking each condition and directly jumps to the matching case.
+- This reduces CPU cycles and makes it faster for large sets of conditions.

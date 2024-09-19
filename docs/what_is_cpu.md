@@ -1,0 +1,4 @@
+- The CPU (Central Processing Unit) is the brain of the computer. 
+- It processes instructions from programs. 
+- Every time you run a program, the CPU is busy executing instructions and calculating results. 
+- Each step the CPU takes is called a CPU Cycle.

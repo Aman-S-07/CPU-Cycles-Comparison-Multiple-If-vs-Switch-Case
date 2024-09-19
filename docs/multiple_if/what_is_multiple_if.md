@@ -1,0 +1,3 @@
+- In programming, Multiple-If Statements are used to check multiple conditions one by one. 
+- It’s like asking multiple questions and checking their answers. 
+- If one condition is true, a certain block of code is executed.
