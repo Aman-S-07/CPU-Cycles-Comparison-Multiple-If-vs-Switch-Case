@@ -1,0 +1,990 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../when_to_use_multiple_if/">
+      
+      
+        <link rel="next" href="../conclusion/">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.35">
+    
+    
+      
+        <title>When to Use Switch-Case - CPU Cycles Comparison: Multiple-If vs Switch-Case</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.35f28582.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CFira+Codez:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Fira Codez"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#use-switch-case-when" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="CPU Cycles Comparison: Multiple-If vs Switch-Case" class="md-header__button md-logo" aria-label="CPU Cycles Comparison: Multiple-If vs Switch-Case" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            CPU Cycles Comparison: Multiple-If vs Switch-Case
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              When to Use Switch-Case
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="CPU Cycles Comparison: Multiple-If vs Switch-Case" class="md-nav__button md-logo" aria-label="CPU Cycles Comparison: Multiple-If vs Switch-Case" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    CPU Cycles Comparison: Multiple-If vs Switch-Case
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../introduction/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Introduction
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../what_is_cpu/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    What is CPU?
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../why_cpu_cycles_matter/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Why Do CPU Cycles Matter?
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Multiple-If Statements
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Multiple-If Statements
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../multiple_if/what_is_multiple_if/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    What Are Multiple-If Statements?
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../multiple_if/example_multiple_if/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Example of Multiple-If in Python
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../multiple_if/cpu_cycles_multiple_if/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    CPU Cycles in Multiple-If
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../multiple_if/pros_multiple_if/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Pros of Multiple-If
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../multiple_if/cons_multiple_if/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Cons of Multiple-If
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Switch-Case
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Switch-Case
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../switch_case/what_is_switch_case/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    What Is Switch-Case?
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../switch_case/example_switch_case/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Example of Switch-Case in Python
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../switch_case/cpu_cycles_switch_case/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    CPU Cycles in Switch-Case
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../switch_case/pros_switch_case/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Pros of Switch-Case
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../switch_case/cons_switch_case/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Cons of Switch-Case
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cpu_cycles_comparison/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    CPU Cycles Comparison
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../when_to_use_multiple_if/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    When to Use Multiple-If
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    When to Use Switch-Case
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    When to Use Switch-Case
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#use-switch-case-when" class="md-nav__link">
+    <span class="md-ellipsis">
+      Use Switch-Case when:
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-scenario" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example Scenario:
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Example Scenario:">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#python-code-example-using-dictionary-as-python-does-not-have-native-switch-case" class="md-nav__link">
+    <span class="md-ellipsis">
+      Python Code Example Using Dictionary (as Python does not have native Switch-Case)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-use-switch-case-here" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why Use Switch-Case Here?
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Why Use Switch-Case Here?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#single-variable-check" class="md-nav__link">
+    <span class="md-ellipsis">
+      Single variable check:
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#performance" class="md-nav__link">
+    <span class="md-ellipsis">
+      Performance:
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary:
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../conclusion/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Conclusion
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#use-switch-case-when" class="md-nav__link">
+    <span class="md-ellipsis">
+      Use Switch-Case when:
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-scenario" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example Scenario:
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Example Scenario:">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#python-code-example-using-dictionary-as-python-does-not-have-native-switch-case" class="md-nav__link">
+    <span class="md-ellipsis">
+      Python Code Example Using Dictionary (as Python does not have native Switch-Case)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-use-switch-case-here" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why Use Switch-Case Here?
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Why Use Switch-Case Here?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#single-variable-check" class="md-nav__link">
+    <span class="md-ellipsis">
+      Single variable check:
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#performance" class="md-nav__link">
+    <span class="md-ellipsis">
+      Performance:
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary:
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  <h1>When to Use Switch-Case</h1>
+
+<h4 id="use-switch-case-when">Use Switch-Case when:<a class="headerlink" href="#use-switch-case-when" title="Permanent link">&para;</a></h4>
+<ul>
+<li>You are checking a single variable against multiple possible values.</li>
+<li>Performance is important, and you want to minimize CPU cycles.</li>
+</ul>
+<h4 id="example-scenario">Example Scenario:<a class="headerlink" href="#example-scenario" title="Permanent link">&para;</a></h4>
+<ul>
+<li>Let’s consider a scenario where you’re writing a program to decide an action based on the day of the week. </li>
+<li>Each day has a specific activity assigned. In this case, using Switch-Case is ideal because you are checking one variable (day_of_week) against multiple possible values ("Monday", "Tuesday", etc.).</li>
+</ul>
+<h5 id="python-code-example-using-dictionary-as-python-does-not-have-native-switch-case">Python Code Example Using Dictionary (as Python does not have native Switch-Case)<a class="headerlink" href="#python-code-example-using-dictionary-as-python-does-not-have-native-switch-case" title="Permanent link">&para;</a></h5>
+<ul>
+<li>Since Python doesn't have a built-in Switch-Case syntax, we can simulate it using a dictionary to map keys (possible values of the variable) to corresponding actions:</li>
+</ul>
+<div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">activity_for_day</span><span class="p">(</span><span class="n">day_of_week</span><span class="p">):</span>
+    <span class="n">switch_case</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;Monday&quot;</span><span class="p">:</span> <span class="s2">&quot;Go to the gym.&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Tuesday&quot;</span><span class="p">:</span> <span class="s2">&quot;Attend a meeting.&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Wednesday&quot;</span><span class="p">:</span> <span class="s2">&quot;Work from home.&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Thursday&quot;</span><span class="p">:</span> <span class="s2">&quot;Go grocery shopping.&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Friday&quot;</span><span class="p">:</span> <span class="s2">&quot;Go out with friends.&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Saturday&quot;</span><span class="p">:</span> <span class="s2">&quot;Relax and watch TV.&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Sunday&quot;</span><span class="p">:</span> <span class="s2">&quot;Spend time with family.&quot;</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="n">switch_case</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">day_of_week</span><span class="p">,</span> <span class="s2">&quot;Invalid day of the week.&quot;</span><span class="p">)</span>
+
+<span class="n">day_of_week</span> <span class="o">=</span> <span class="s2">&quot;Friday&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">activity_for_day</span><span class="p">(</span><span class="n">day_of_week</span><span class="p">))</span>
+</code></pre></div></td></tr></table></div>
+
+<h4 id="why-use-switch-case-here">Why Use Switch-Case Here?<a class="headerlink" href="#why-use-switch-case-here" title="Permanent link">&para;</a></h4>
+<h5 id="single-variable-check"><code>Single variable check</code>:<a class="headerlink" href="#single-variable-check" title="Permanent link">&para;</a></h5>
+<ul>
+<li>We are only checking one variable (day_of_week) and comparing it against several known values ("Monday", "Tuesday", etc.).</li>
+</ul>
+<h5 id="performance"><code>Performance</code>:<a class="headerlink" href="#performance" title="Permanent link">&para;</a></h5>
+<ul>
+<li>In scenarios where there are many conditions (like checking all 7 days), using a Switch-Case reduces the number of comparisons. </li>
+<li>The program evaluates the variable (day_of_week) once and quickly jumps to the correct result based on its value. This improves performance and reduces CPU cycles.</li>
+</ul>
+<h5 id="summary"><code>Summary</code>:<a class="headerlink" href="#summary" title="Permanent link">&para;</a></h5>
+<ul>
+<li>Switch-Case is ideal when you are checking one variable against multiple possible values. </li>
+<li>It is faster and more efficient compared to Multiple-If because it avoids evaluating each condition separately. </li>
+<li>If performance is critical (such as in larger programs or systems that handle many conditions), Switch-Case helps minimize CPU cycles and improves execution speed.</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.56dfad97.min.js"></script>
+      
+    
+  </body>
+</html>
