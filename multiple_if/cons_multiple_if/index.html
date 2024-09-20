@@ -69,6 +69,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#can-be-slow-if-many-conditions-are-checked" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -402,6 +407,17 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Cons of Multiple-If
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -411,6 +427,41 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#can-be-slow-if-many-conditions-are-checked" class="md-nav__link">
+    <span class="md-ellipsis">
+      Can be slow if many conditions are checked:
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#every-condition-is-evaluated-even-if-a-match-is-found-early" class="md-nav__link">
+    <span class="md-ellipsis">
+      Every condition is evaluated, even if a match is found early:
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -669,6 +720,32 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#can-be-slow-if-many-conditions-are-checked" class="md-nav__link">
+    <span class="md-ellipsis">
+      Can be slow if many conditions are checked:
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#every-condition-is-evaluated-even-if-a-match-is-found-early" class="md-nav__link">
+    <span class="md-ellipsis">
+      Every condition is evaluated, even if a match is found early:
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -684,9 +761,13 @@
 
   <h1>Cons of Multiple-If</h1>
 
+<h5 id="can-be-slow-if-many-conditions-are-checked">Can be slow if many conditions are checked:<a class="headerlink" href="#can-be-slow-if-many-conditions-are-checked" title="Permanent link">&para;</a></h5>
 <ul>
-<li>Can be slow if many conditions are checked.</li>
-<li>Every condition is evaluated, even if a match is found early. </li>
+<li>If you have a large number of if statements, the program must evaluate each condition one by one, which can be inefficient, especially if many conditions need to be checked.</li>
+</ul>
+<h5 id="every-condition-is-evaluated-even-if-a-match-is-found-early">Every condition is evaluated, even if a match is found early:<a class="headerlink" href="#every-condition-is-evaluated-even-if-a-match-is-found-early" title="Permanent link">&para;</a></h5>
+<ul>
+<li>In a series of if statements (without using elif or else), even if one condition is true, the program will continue checking all subsequent conditions, which may be unnecessary and cause additional overhead.</li>
 </ul>
 
 
